@@ -131,19 +131,12 @@
 		-->
 		<!-- <extensions></extensions> -->
 		<extensions>
-			<extension type="Custom" subtype="Mura500">
-				<attributeset name="Mura500">
-					<attribute name="Frequency" type="TextBox" validation="Numeric" defaultValue="#VARIABLES.settingsDefault.Frequency#" />
-					<attribute name="EmailEnabled" type="TextBox" validation="Numeric" defaultValue="#VARIABLES.settingsDefault.EmailEnabled#" />
-					<attribute name="Email" type="TextBox" defaultValue="#VARIABLES.settingsDefault.Email#" />
-					<attribute name="EmailFrequency" type="TextBox" validation="Numeric" defaultValue="#VARIABLES.settingsDefault.EmailFrequency#" />
-					<attribute name="EmailBody" type="TextBox" defaultValue="" />
-					<attribute name="GntpEnabled" type="TextBox" validation="Numeric" defaultValue="#VARIABLES.settingsDefault.GntpEnabled#" />
+			<extension type="Custom" subtype="MuraVisitToast">
+				<attributeset name="MuraVisitToast">
 					<attribute name="GntpHost" type="TextBox" defaultValue="#VARIABLES.settingsDefault.GntpHost#" />
 					<attribute name="GntpPort" type="TextBox" defaultValue="#VARIABLES.settingsDefault.GntpPort#" />
 					<attribute name="GntpPassword" type="TextBox" defaultValue="#VARIABLES.settingsDefault.GntpPassword#" />
 					<attribute name="GntpIcon" type="TextBox" defaultValue="#VARIABLES.settingsDefault.GntpIcon#" />
-					<attribute name="LastUpdate" type="TextBox" validation="date" defaultValue="#VARIABLES.settingsDefault.LastUpdate#" />
 				</attributeset>
 			</extension>
 		</extensions>
