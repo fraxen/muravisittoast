@@ -1,4 +1,7 @@
 <cfscript>
+	VARIABLES.loader = new mura.javaloader.JavaLoader(
+		DirectoryList(ExpandPath('./java'), true, 'path', '*.jar')
+	);
 	VARIABLES.package = 'muravisittoast';
 	VARIABLES.packageVersion = '1.0.0';
 	VARIABLES.settingsDefault = {
@@ -11,19 +14,16 @@
 	for (site in APPLICATION.serviceFactory.getBean('muraScope').init('default').getPlugin('muravisittoast').getAssignedSites()) {
 		ArrayAppend(VARIABLES.sites, site.SiteID);
 	}
-	VARIABLES.hasGNTP = false;
-	try {
-		createObject('java', 'net.sf.libgrowl.GrowlConnector');
-		VARIABLES.hasGNTP = true;
-	}
-	catch(any e) {
-	}
+	VARIABLES.loader.create('net.sf.libgrowl.GrowlConnector');
+	dbfile = '#ExpandPath('./database/')#GeoLite2-City.mmdb';
+	db = CreateObject('java', 'java.io.File').init(dbfile);
+	mm = VARIABLES.loader.create('com.maxmind.geoip2.DatabaseReader$Builder')
+		.Init(db)
+		.build();
+	inet = CreateObject('java', 'java.net.InetAddress').getByName(CGI.REMOTE_HOST);
 
-	lock name='mura500' type='exclusive' timeout=200 {
-		VARIABLES.SettingsService = new model.services.settings(
-			sites: VARIABLES.sites,
-			settingsDefault: VARIABLES.settingsDefault,
-			hasGNTP: VARIABLES.hasGNTP
-		);
+	lock name='muravisittoast' type='exclusive' timeout=200 {
 	}
+	dump(mm);
+	abort;
 </cfscript>
