@@ -11,9 +11,15 @@
 		GntpIcon: 'https://raw.githubusercontent.com/fraxen/muravisittoast/master/defaulticon.png',
 	};
 	VARIABLES.sites = [];
-	for (site in APPLICATION.serviceFactory.getBean('muraScope').init('default').getPlugin('muravisittoast').getAssignedSites()) {
+	VARIABLES.m = application.serviceFactory.getBean('muraScope').init('default');
+	VARIABLES.pluginConfig = m.getPlugin(VARIABLES.package);
+	m = VARIABLES.m;
+	for (site in VARIABLES.pluginConfig.getAssignedSites()) {
 		ArrayAppend(VARIABLES.sites, site.SiteID);
 	}
+	VARIABLES.pluginConfig.registerModelDir(dir='/model');
+	VARIABLES.SettingsService = VARIABLES.pluginConfig.getServiceFactory().getBean('settings');
+	/*
 	VARIABLES.loader.create('net.sf.libgrowl.GrowlConnector');
 	dbfile = '#ExpandPath('./database/')#GeoLite2-City.mmdb';
 	db = CreateObject('java', 'java.io.File').init(dbfile);
@@ -24,6 +30,7 @@
 
 	lock name='muravisittoast' type='exclusive' timeout=200 {
 	}
-	dump(mm);
+	dump(inet);
 	abort;
+	*/
 </cfscript>
