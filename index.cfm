@@ -7,12 +7,12 @@
 		$ = application.serviceFactory.getBean('muraScope').init('default');
 	}
 	if ( !IsDefined('pluginConfig') ) {
-		pluginConfig = $.getPlugin('mura500');
+		pluginConfig = $.getPlugin(VARIABLES.package);
 	}
 
 	if (!$.currentUser().getS2()) {
 		location(
-			url='#application.configBean.getContext()#/admin/index.cfm?muraAction=clogin.main&returnURL=#application.configBean.getContext()#/plugins/mura500/',
+			url='#application.configBean.getContext()#/admin/index.cfm?muraAction=clogin.main&returnURL=#application.configBean.getContext()#/plugins/#VARIABLES.package#/',
 			addtoken=false
 		);
 	}
@@ -42,11 +42,11 @@
 			}
 			getSettingsService().updateSite(SiteID, siteVals);
 		}
-		location(url='#application.configBean.getContext()#/plugins/mura500/', addtoken=false);
+		location(url='#application.configBean.getContext()#/plugins/#VARIABLES.package#/', addtoken=false);
 	}
 	if (StructKeyExists(URL, 'action') && URL.action == 'generate') {
 		getErrorManagerService().forceGenerateAll();
-		location(url='#application.configBean.getContext()#/plugins/mura500/', addtoken=false);
+		location(url='#application.configBean.getContext()#/plugins/#VARIABLES.package#/', addtoken=false);
 	}
 	// }}}
 </cfscript>
@@ -73,7 +73,7 @@
 <!--- {{{ BODY --->
 <cfoutput>
 <cfsavecontent variable="body">
-	<h2>Mura500 configuration</h2>
+	<h2>Mura visit toast configuration</h2>
 	<div>
 		<p>This is a simple plugin to (periodically) generate static pages for 404 (Not found) and 500 (Internal server error) messages. Mura has good handling of 404 errors for requests to pages that go through the CMS, but that might not include e.g. css/js resources. For a 500 page, the plugin tries to download the page <em>/500</em> on the site in question. If those pages do not exist, they will be created with sensible defaults, that you can further customize.</p>
 		<p>There are multiple places where you can add these as settings: in the webserver (Apache/Nginx/IIS etc), in the servlet engine (Jetty/Tomcat etc) and in the coldfusion/cfml engine (Lucee/ACF). Instructions on how to specify that is outside the scope of this plugin, please refer to the documentation for the piece of software in question.</p>
@@ -87,9 +87,9 @@
 		<div><em>Plugin is not enabled for any sites yet</em></div>
 	<cfelse>
 	<br/>
-	<input type="submit" class="btn btn-default" value="Generate error templates now" style="WIDTH: 100%;" onclick="document.location='#application.configBean.getContext()#/plugins/mura500/?action=generate'; return false;" />
+	<input type="submit" class="btn btn-default" value="Generate error templates now" style="WIDTH: 100%;" onclick="document.location='#application.configBean.getContext()#/plugins/#VARIABLES.package#/?action=generate'; return false;" />
 	<br/><br/>
-	<form method="post" id="configedit" name="mura500" action="#application.configBean.getContext()#/plugins/mura500/?action=update">
+	<form method="post" id="configedit" name="muravisittoast" action="#application.configBean.getContext()#/plugins/#VARIABLES.package#/?action=update">
 		<cfloop index="SiteId" array="#StructKeyArray(siteSettings)#">
 			<fieldset name="site#SiteId#" id="site#SiteId#">
 				<legend>#SiteId#</legend>
